@@ -361,3 +361,14 @@ Configure threat intelligence feeds
 kubectl apply -f demo/40-threatfeeds/feodo-threatfeed.yaml
 kubectl apply -f demo/40-threatfeeds/feodo-block-policy.yaml
 ```
+
+## clean up demo and delete AKS clsuter
+
+```bash
+# delete apps
+kubectl delete -f demo/app
+
+# delete AKS cluster and resource group
+az aks delete -n $CLUSTER_NAME -g $RG --yes --no-wait
+az group delete --resource-group $RG --yes --no-wait
+```
