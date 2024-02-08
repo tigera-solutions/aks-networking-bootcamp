@@ -130,7 +130,7 @@ LOCATION='westus2'
 CLUSTER_NAME='azcni-cali-win'
 K8S_VERSION=1.28
 WIN_NP_NAME=calwin
-WIN_PASSWORD="Pa22w0rd${RANDOM}"
+WIN_PASSWORD="Pa22w0rd${RANDOM}-${RANDOM}"
 
 # create AKS cluster
 az aks create \
@@ -189,6 +189,7 @@ az aks nodepool add \
   --resource-group $RG \
   --cluster-name $CLUSTER_NAME \
   --os-type Windows \
+  --node-count 1 \
   --name $WIN_NP_NAME
 ```
 
@@ -331,6 +332,12 @@ Deploy `iis` application for Windows nodes
 
 ```bash
 kubectl apply -f demo/app/iis.yaml
+
+# test connection to IIS service
+kubectl exec -t netshoot -- sh -c 'curl -m2 -sI iis-svc | grep -i http'
+
+# secure IIS app
+kubectl apply -f demo/10-zero-trust-security/iis-policy.yaml
 ```
 
 Use network sets
@@ -347,6 +354,10 @@ kubectl apply -f demo/20-egress-controls/allowed-domains-netset.yaml
 kubectl apply -f demo/20-egress-controls/azure-services-netset.yaml
 kubectl apply -f demo/20-egress-controls/azure-services.dns-policy.yaml
 kubectl apply -f demo/20-egress-controls/calico.global.dns-policy.yaml
+
+# test access to external domains
+kubectl -n hipstershop exec -t centos -- sh -c 'curl -m2 -sI google.com | grep -i http'
+kubectl -n hipstershop exec -t centos -- sh -c 'curl -m2 -sI myaccount.blob.core.windows.net 80'
 ```
 
 Configure security alerts
@@ -360,6 +371,10 @@ Configure threat intelligence feeds
 ```bash
 kubectl apply -f demo/40-threatfeeds/feodo-threatfeed.yaml
 kubectl apply -f demo/40-threatfeeds/feodo-block-policy.yaml
+
+# test access to IP from the threatfeed list
+IP=$(kubectl get globalnetworkset -l threatfeed=feodo -ojson | jq '.items[] | .spec.nets[0]' | sed -e 's/^"//' -e 's/"$//' -e 's/\/32//')
+kubectl exec -t netshoot -- sh -c "nc -zv -w2 $IP 22"
 ```
 
 ## clean up demo and delete AKS clsuter
