@@ -33,7 +33,7 @@ This guide uses [Azure Cloud Shell](https://learn.microsoft.com/en-us/azure/clou
 
 ```bash
 # see available AKS versions in your region
-LOCAION='westus2'
+LOCATION='westus2'
 az aks get-versions -l $LOCATION --output table
 
 # create resource group for AKS cluster
@@ -284,7 +284,7 @@ Configure Calico Cloud/Enterprise
 
 ```bash
 # configure FelixConfiguration resource
-kubectl patch felixconfiguration default --patch-file demo/setup/felix.yaml
+kubectl patch felixconfiguration default --type merge --patch-file demo/setup/felix.yaml
 ```
 
 ## deploy sample application and test policies
