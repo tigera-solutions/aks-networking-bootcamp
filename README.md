@@ -59,7 +59,7 @@ In this example AKS cluster is provisioned with [Azure CNI](https://learn.micros
 RG='demo'
 LOCATION='westus2'
 CLUSTER_NAME='azcni-cali'
-K8S_VERSION=1.28
+K8S_VERSION=1.29
 
 # create AKS cluster
 az aks create \
@@ -93,7 +93,7 @@ In this example AKS cluster is provisioned with [Azure CNI overlay](https://lear
 RG='demo'
 LOCATION='westus2'
 CLUSTER_NAME='azcni-overlay-cali'
-K8S_VERSION=1.28
+K8S_VERSION=1.29
 POD_CIDR='192.168.0.0/16'
 
 # create AKS cluster
@@ -128,7 +128,7 @@ In this example AKS cluster is provisioned with [Azure CNI](https://learn.micros
 RG='demo'
 LOCATION='westus2'
 CLUSTER_NAME='azcni-cali-win'
-K8S_VERSION=1.28
+K8S_VERSION=1.29
 WIN_NP_NAME=calwin
 WIN_PASSWORD="Pa22w0rd${RANDOM}-${RANDOM}"
 
@@ -202,7 +202,7 @@ In this example AKS cluster is provisioned with [Bring your own CNI plugin](http
 RG='demo'
 LOCATION='westus2'
 CLUSTER_NAME='calico-ebpf'
-K8S_VERSION=1.28
+K8S_VERSION=1.29
 POD_CIDR='10.244.0.0/16'
 
 # create AKS cluster
@@ -274,7 +274,16 @@ kubectl patch ds -n kube-system kube-proxy -p '{"spec":{"template":{"spec":{"nod
 
 ## connect AKS cluster to Calico Cloud
 
+> [!NOTE]
+> if you installed Calico open source using Helm method, make sure to use Helm method to upgrade Calico to Calico Cloud or Calico Enterprise.
+
 Follow instructions in the official [Calico Cloud documentation](https://docs.tigera.io/calico-cloud/about) to [connect your AKS cluster to Calico Cloud](https://docs.tigera.io/calico-cloud/get-started/connect/) management plane.
+
+## clone workshop repo
+
+```bash
+git clone https://github.com/tigera-solutions/aks-networking-bootcamp.git && cd aks-networking-bootcamp
+```
 
 ## configure Calico Cloud/Enterprise
 
