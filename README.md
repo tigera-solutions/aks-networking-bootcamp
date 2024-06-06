@@ -250,7 +250,7 @@ EOF
 
 # install Calico
 kubectl create namespace tigera-operator
-helm install calico projectcalico/tigera-operator --version v3.27.0 -f values.yaml --namespace tigera-operator
+helm install calico projectcalico/tigera-operator --version v3.28.0 -f values.yaml --namespace tigera-operator
 
 # get config values from AKS cluster settings
 KUBERNETES_SERVICE_HOST=$(az aks show -g $RG -n $CLUSTER_NAME --query 'fqdn' --output tsv)
