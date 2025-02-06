@@ -59,7 +59,7 @@ In this example AKS cluster is provisioned with [Azure CNI](https://learn.micros
 RG='demo'
 LOCATION='westus2'
 CLUSTER_NAME='azcni-cali'
-K8S_VERSION=1.29
+K8S_VERSION=1.30
 
 # create AKS cluster
 az aks create \
@@ -93,7 +93,7 @@ In this example AKS cluster is provisioned with [Azure CNI overlay](https://lear
 RG='demo'
 LOCATION='westus2'
 CLUSTER_NAME='azcni-overlay-cali'
-K8S_VERSION=1.29
+K8S_VERSION=1.30
 POD_CIDR='192.168.0.0/16'
 
 # create AKS cluster
@@ -128,7 +128,7 @@ In this example AKS cluster is provisioned with [Azure CNI](https://learn.micros
 RG='demo'
 LOCATION='westus2'
 CLUSTER_NAME='azcni-cali-win'
-K8S_VERSION=1.29
+K8S_VERSION=1.30
 WIN_NP_NAME=calwin
 WIN_PASSWORD="Pa22w0rd${RANDOM}-${RANDOM}"
 
@@ -202,7 +202,7 @@ In this example AKS cluster is provisioned with [Bring your own CNI plugin](http
 RG='demo'
 LOCATION='westus2'
 CLUSTER_NAME='calico-ebpf'
-K8S_VERSION=1.29
+K8S_VERSION=1.30
 POD_CIDR='10.244.0.0/16'
 
 # create AKS cluster
